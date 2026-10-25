@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "AdStop – Bloqueur de pubs gratuit",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Bloqueur de pubs gratuit et open source : pubs, pisteurs, popups, redirections, bannières cookies et pubs YouTube.",
   "permissions": [
     "declarativeNetRequest",

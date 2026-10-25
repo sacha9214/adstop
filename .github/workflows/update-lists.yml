@@ -1,0 +1,59 @@
+# Chaque lundi : télécharge les listes de filtres à jour, régénère les règles,
+# et si quelque chose a changé, publie une nouvelle version (zip prêt à installer).
+name: Mise à jour des listes
+
+on:
+  schedule:
+    - cron: "0 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: tools/package-lock.json
+
+      - name: Générer les règles
+        working-directory: tools
+        run: |
+          npm ci
+          node fetch.mjs
+          node convert.mjs
+          node cosmetic.mjs
+
+      - name: Publier si les listes ont changé
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- adstop/lists; then
+            echo "Listes inchangées."
+            exit 0
+          fi
+          # Version : 1.2.3 -> 1.2.4
+          VERSION=$(node -e '
+            const fs = require("fs");
+            const m = JSON.parse(fs.readFileSync("adstop/manifest.json"));
+            const v = m.version.split(".").map(Number);
+            v[2] = (v[2] || 0) + 1;
+            m.version = v.join(".");
+            fs.writeFileSync("adstop/manifest.json", JSON.stringify(m, null, 2) + "\n");
+            console.log(m.version);
+          ')
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add adstop
+          git commit -m "Listes de filtres à jour (v$VERSION)"
+          git push
+          (cd adstop && zip -qr "../adstop-$VERSION.zip" . -x "_metadata/*")
+          gh release create "v$VERSION" "adstop-$VERSION.zip" \
+            --title "AdStop $VERSION" \
+            --notes "Listes de filtres mises à jour automatiquement. Téléchargez le zip, décompressez-le, puis « Charger l'extension non empaquetée » dans chrome://extensions."

@@ -8,6 +8,8 @@
   header { background: linear-gradient(135deg, #0b1f4b, #16357a); color: #fff; padding: 14px 16px; display: flex; align-items: center; gap: 10px; }
   header svg { width: 26px; height: 26px; }
   header b { font-size: 17px; letter-spacing: .2px; }
+  header a { display: flex; opacity: .85; } header a:hover { opacity: 1; }
+  header a svg { width: 20px; height: 20px; }
   header .tag { margin-left: auto; font-size: 11px; background: rgba(255,255,255,.15); padding: 3px 8px; border-radius: 10px; }
 
   .hero { background: #fff; margin: 12px; border-radius: 12px; padding: 18px 16px; text-align: center; box-shadow: 0 1px 3px rgba(16,30,70,.08); }
@@ -43,6 +45,7 @@
   <header>
     <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3z"/></svg>
     <b>AdStop</b><span class="tag">Gratuit</span>
+    <a id="settings" title="Paramètres" href="#"><svg viewBox="0 0 24 24" fill="#fff"><path d="M19.4 13a7.5 7.5 0 0 0 0-2l2.1-1.6-2-3.4-2.5 1a7.6 7.6 0 0 0-1.7-1L15 3.3h-4l-.4 2.7a7.6 7.6 0 0 0-1.7 1l-2.5-1-2 3.4L6.6 11a7.5 7.5 0 0 0 0 2l-2.1 1.6 2 3.4 2.5-1c.5.4 1.1.7 1.7 1l.4 2.7h4l.4-2.7c.6-.3 1.2-.6 1.7-1l2.5 1 2-3.4L19.4 13zM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z" transform="translate(-1 0)"/></svg></a>
   </header>
 
   <section class="hero" id="hero">
@@ -52,10 +55,11 @@
   </section>
 
   <button class="btn" id="pause">Ne pas bloquer sur ce site</button>
+  <button class="btn ghost" id="pick">Bloquer un élément de la page</button>
 
   <div class="stats">
-    <div><strong id="blocked">0</strong><span>Bloqués au total</span></div>
-    <div><strong id="nsites">0</strong><span>Sites autorisés</span></div>
+    <div><strong id="page">0</strong><span>Sur cette page</span></div>
+    <div><strong id="blocked">0</strong><span>Au total</span></div>
   </div>
 
   <label class="row">Protection activée

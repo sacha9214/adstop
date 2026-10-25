@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>AdStop – Paramètres</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font: 14px -apple-system, "Segoe UI", Roboto, sans-serif; margin: 0; color: #1c2233; background: #f3f5f9; }
+  header { background: linear-gradient(135deg, #0b1f4b, #16357a); color: #fff; padding: 18px 0; }
+  header div, main { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+  header div { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; }
+  header svg { width: 28px; height: 28px; }
+  main { padding-top: 20px; padding-bottom: 40px; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .5px; color: #6b7385; margin: 26px 0 8px; }
+  .card { background: #fff; border-radius: 12px; box-shadow: 0 1px 3px rgba(16,30,70,.08); }
+  .row { display: flex; align-items: center; gap: 14px; padding: 14px 16px; }
+  .row + .row { border-top: 1px solid #edf0f5; }
+  .row .txt { flex: 1; }
+  .row small { display: block; color: #6b7385; margin-top: 2px; }
+  .warn { color: #c2410c; }
+  .empty { padding: 16px; color: #6b7385; }
+  code { font-size: 12px; background: #f3f5f9; padding: 2px 6px; border-radius: 5px; word-break: break-all; }
+  button { font: 600 13px inherit; font-family: inherit; border: 1px solid #c9d6ff; background: #fff; color: #1f5eff; border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+  button:hover { background: #eef3ff; }
+  button.danger { color: #d93838; border-color: #f5c2c2; } button.danger:hover { background: #fdecec; }
+  .switch { position: relative; width: 40px; height: 22px; flex: none; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .switch i { position: absolute; inset: 0; background: #c5cbd8; border-radius: 22px; cursor: pointer; transition: .2s; }
+  .switch i::before { content: ""; position: absolute; width: 18px; height: 18px; left: 2px; top: 2px; background: #fff; border-radius: 50%; transition: .2s; }
+  .switch input:checked + i { background: #18a058; }
+  .switch input:checked + i::before { transform: translateX(18px); }
+  .stat { font-size: 28px; font-weight: 700; color: #0b1f4b; }
+</style>
+</head>
+<body>
+  <header><div>
+    <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3z"/></svg>
+    AdStop – Paramètres
+  </div></header>
+  <main>
+    <h2>Filtres</h2>
+    <div class="card" id="lists"></div>
+
+    <h2>Sites où les pubs sont autorisées</h2>
+    <div class="card" id="paused"></div>
+
+    <h2>Éléments masqués avec le sélecteur</h2>
+    <div class="card" id="custom"></div>
+
+    <h2>Statistiques</h2>
+    <div class="card"><div class="row">
+      <div class="txt"><div class="stat" id="blocked">0</div><small>pubs, pisteurs et popups bloqués depuis l'installation</small></div>
+      <button class="danger" id="reset">Remettre à zéro</button>
+    </div></div>
+  </main>
+  <script src="options.js"></script>
+</body>
+</html>

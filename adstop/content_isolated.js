@@ -9,9 +9,15 @@
     try { chrome.runtime.sendMessage(msg).catch(() => {}); } catch {}
   };
 
-  chrome.storage.local.get({ enabled: true, paused: [] }, ({ enabled, paused }) => {
-    const active = enabled && !paused.includes(host);
-    document.dispatchEvent(new CustomEvent("adstop-config", { detail: JSON.stringify({ active }) }));
+  // Transmet la config aux scripts du monde MAIN (anti-popups, YouTube), et à chaque changement.
+  const pushConfig = () =>
+    chrome.storage.local.get({ enabled: true, paused: [], youtube: true }, ({ enabled, paused, youtube }) => {
+      const active = enabled && !paused.some((h) => host === h || host.endsWith("." + h));
+      document.dispatchEvent(new CustomEvent("adstop-config", { detail: JSON.stringify({ active, youtube }) }));
+    });
+  pushConfig();
+  chrome.storage.onChanged.addListener((c, area) => {
+    if (area === "local" && chrome.runtime?.id && (c.enabled || c.paused || c.youtube)) pushConfig();
   });
 
   document.addEventListener("adstop-blocked", () => {

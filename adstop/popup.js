@@ -10,12 +10,12 @@ const $ = (id) => document.getElementById(id);
 
   const render = async () => {
     const { enabled, paused, blocked } = await chrome.storage.local.get({ enabled: true, paused: [], blocked: 0 });
-    const isPaused = paused.includes(host);
+    const isPaused = paused.some((h) => host === h || host.endsWith("." + h));
     const on = enabled && !isPaused && !!host;
 
     $("enabled").checked = enabled;
     $("blocked").textContent = blocked.toLocaleString("fr-FR");
-    $("nsites").textContent = paused.length;
+    $("pick").disabled = !on;
     $("site").textContent = host || "Page non prise en charge";
     $("hero").classList.toggle("off", !on);
     $("status").textContent = !enabled ? "Protection désactivée"
@@ -34,11 +34,27 @@ const $ = (id) => document.getElementById(id);
   });
   $("pause").addEventListener("click", async () => {
     const { paused } = await chrome.storage.local.get({ paused: [] });
-    const next = paused.includes(host) ? paused.filter((h) => h !== host) : [...paused, host];
+    const hit = paused.filter((h) => host === h || host.endsWith("." + h));
+    const next = hit.length ? paused.filter((h) => !hit.includes(h)) : [...paused, host];
     await chrome.storage.local.set({ paused: next });
     chrome.tabs.reload(tab.id);
     render();
   });
 
+  $("pick").addEventListener("click", async () => {
+    await chrome.scripting.executeScript({ target: { tabId: tab.id }, files: ["picker.js"] });
+    window.close();
+  });
+  $("settings").addEventListener("click", (e) => {
+    e.preventDefault();
+    chrome.runtime.openOptionsPage();
+  });
+
   render();
+  // Compteur de la page : relevé frais demandé au background
+  if (host) {
+    const { page } = await chrome.runtime.sendMessage({ type: "stats", tabId: tab.id });
+    $("page").textContent = page.toLocaleString("fr-FR");
+    render(); // le total a pu bouger pendant le relevé
+  }
 })();

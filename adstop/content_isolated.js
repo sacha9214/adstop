@@ -2,13 +2,20 @@
 (() => {
   const host = location.hostname.replace(/^www\./, "");
 
+  // Après un rechargement de l'extension, l'ancien script reste dans la page :
+  // chrome.runtime.id disparaît et sendMessage lève une erreur synchrone.
+  const send = (msg) => {
+    if (!chrome.runtime?.id) return;
+    try { chrome.runtime.sendMessage(msg).catch(() => {}); } catch {}
+  };
+
   chrome.storage.local.get({ enabled: true, paused: [] }, ({ enabled, paused }) => {
     const active = enabled && !paused.includes(host);
     document.dispatchEvent(new CustomEvent("adstop-config", { detail: JSON.stringify({ active }) }));
   });
 
   document.addEventListener("adstop-blocked", () => {
-    chrome.runtime.sendMessage({ type: "blocked" }).catch(() => {});
+    send({ type: "blocked" });
   });
 
   // Toute action réelle de l'utilisateur autorise une navigation légitime (login, paiement...)
@@ -16,7 +23,7 @@
   const gesture = (e) => {
     if (!e.isTrusted || Date.now() - lastG < 1000) return;
     lastG = Date.now();
-    chrome.runtime.sendMessage({ type: "gesture" }).catch(() => {});
+    send({ type: "gesture" });
   };
   document.addEventListener("pointerdown", gesture, true);
   document.addEventListener("keydown", gesture, true);
@@ -31,7 +38,7 @@
       if (!a) return;
       const r = a.getBoundingClientRect();
       if (r.width < 4 || r.height < 4) return;
-      chrome.runtime.sendMessage({ type: "link", href: a.href }).catch(() => {});
+      send({ type: "link", href: a.href });
     },
     true
   );

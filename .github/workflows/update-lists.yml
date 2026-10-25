@@ -1,6 +1,7 @@
 # Chaque lundi : télécharge les listes de filtres à jour, régénère les règles,
 # et si quelque chose a changé, publie une nouvelle version (zip prêt à installer).
-name: Mise à jour des listes
+# Commits et releases en anglais : le dépôt est public.
+name: Update filter lists
 
 on:
   schedule:
@@ -22,7 +23,7 @@ jobs:
           cache: npm
           cache-dependency-path: tools/package-lock.json
 
-      - name: Générer les règles
+      - name: Build rules
         working-directory: tools
         run: |
           npm ci
@@ -30,12 +31,12 @@ jobs:
           node convert.mjs
           node cosmetic.mjs
 
-      - name: Publier si les listes ont changé
+      - name: Release if lists changed
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           if git diff --quiet -- adstop/lists; then
-            echo "Listes inchangées."
+            echo "Lists unchanged."
             exit 0
           fi
           # Version : 1.2.3 -> 1.2.4
@@ -51,9 +52,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add adstop
-          git commit -m "Listes de filtres à jour (v$VERSION)"
+          git commit -m "Update filter lists (v$VERSION)"
           git push
           (cd adstop && zip -qr "../adstop-$VERSION.zip" . -x "_metadata/*")
           gh release create "v$VERSION" "adstop-$VERSION.zip" \
             --title "AdStop $VERSION" \
-            --notes "Listes de filtres mises à jour automatiquement. Téléchargez le zip, décompressez-le, puis « Charger l'extension non empaquetée » dans chrome://extensions."
+            --notes "Filter lists updated automatically. Download the zip, unzip it, then use Load unpacked in chrome://extensions."

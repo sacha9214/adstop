@@ -1,6 +1,6 @@
 # AdStop
 
-A free, open-source ad blocker for Chrome (Manifest V3).
+A free, open-source ad blocker for Chrome (Manifest V3). The interface is in French.
 
 <p align="center"><img src="docs/popup.png" width="320" alt="AdStop popup"></p>
 

@@ -11957,6 +11957,7 @@ a[href^="https://www.pinterest.com/pin/create/button?"]{display:none!important}
 a[href^="https://www.pinterest.com/pin/create/link/"]{display:none!important}
 a[href^="https://www.reddit.com/submit?"]{display:none!important}
 a[href^="https://x.com/intent/follow?screen_name="]{display:none!important}
+a[href^="https://x.com/intent/tweet?"]{display:none!important}
 a[href^="https://x.com/share?"]{display:none!important}
 a[href^="whatsapp://send?text="]{display:none!important}
 a[rel="share-on-facebook"]{display:none!important}

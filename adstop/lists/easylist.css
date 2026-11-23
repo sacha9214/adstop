@@ -1071,7 +1071,6 @@
 #adb_bottom{display:none!important}
 #adbackground{display:none!important}
 #adbanner-container{display:none!important}
-#adbanner1{display:none!important}
 #adbannerbox{display:none!important}
 #adbannerdiv{display:none!important}
 #adbannerleft{display:none!important}
@@ -1084,9 +1083,6 @@
 #adblock-big{display:none!important}
 #adblock-leaderboard{display:none!important}
 #adblock-small{display:none!important}
-#adblock1{display:none!important}
-#adblock2{display:none!important}
-#adblock4{display:none!important}
 #adblockbottom{display:none!important}
 #adbn{display:none!important}
 #adbnr{display:none!important}
@@ -9422,6 +9418,8 @@
 .da-custom-ad-box{display:none!important}
 .dac__banner__wrapper{display:none!important}
 .daily-adlabel{display:none!important}
+.dappier-ad-chain{display:none!important}
+.dappier-ads-top{display:none!important}
 .dart-ad{display:none!important}
 .dart-ad-content{display:none!important}
 .dart-ad-grid{display:none!important}
@@ -10360,6 +10358,7 @@
 .iframe-ads{display:none!important}
 .iframeAd{display:none!important}
 .iframeAds{display:none!important}
+.ii-snigel-billboard{display:none!important}
 .image-advertisement{display:none!important}
 .imageAd{display:none!important}
 .imageAds{display:none!important}
@@ -12827,6 +12826,7 @@ DFP-AD{display:none!important}
 [data-mobile-ad-id]{display:none!important}
 [data-rc-widget]{display:none!important}
 [data-revive-zoneid]{display:none!important}
+[data-shutterstock-state]{display:none!important}
 [data-template-type="nativead"]{display:none!important}
 [data-testid="adBanner-wrapper"]{display:none!important}
 [data-testid="ad_testID"]{display:none!important}

@@ -12920,6 +12920,7 @@
 .modCookiesConsent{display:none!important}
 .modFinancialCookies{display:none!important}
 .modUt_cookie_privacy_1{display:none!important}
+.mod_cms_accept_tags{display:none!important}
 .mod_cms_cookie_bar{display:none!important}
 .mod_cookie-bar{display:none!important}
 .mod_cookie_bar{display:none!important}
@@ -14820,6 +14821,7 @@ cloudflare-app[app="cookiless"]{display:none!important}
 cloudflare-app[app="tibrr-cookie-consent"]{display:none!important}
 cmm-cookie-banner{display:none!important}
 cmpviews-cookies-accept{display:none!important}
+cms-accept-tags{display:none!important}
 cn-cookie-agreement{display:none!important}
 col-cookie-info-banner{display:none!important}
 comply-consent-manager{display:none!important}
